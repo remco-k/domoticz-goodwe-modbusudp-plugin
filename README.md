@@ -1,6 +1,6 @@
 # Domoticz GoodWe Modbus UDP plugin
 
-A Domoticz plugin connect to GoodWe inverters over LAN or WAN via UPD that supports Modbus.
+A Domoticz plugin that connects to GoodWe inverters over LAN or WLAN via UDP that supports Modbus.
 
 The plugin uses a goodwe library from https://pypi.org/project/goodwe/ to communicate with the inverter.
 
@@ -22,9 +22,9 @@ Install the Goodwe Modbus UDP plugin:
 
 ``` shell
 cd domoticz/plugins
-git clone https://github.com/<linkhere>
+git clone https://github.com/remco-k/domoticz-goodwe-modbusudp-plugin.git
 ```
-Note: Some Domoticz installation have other plugin paths.
+Note: Some Domoticz installation have other plugin paths (such as `domoticz/userdata/plugins`).
 
 Install required dependencies:
 ``` shell
@@ -33,7 +33,4 @@ sudo pip3 install -r requirements.txt
 ```
 
 Then restart your Domoticz, and add the hardware via Setup->Hardware and select Type: "GoodWe ModbusUDP", enter a name and IP address and optionally select the inverter family for a faster connection time. Set the interval to your needs and then press the "Add" button.
-The all of the inverter sensors should now be visible in "Utility" and "Temperature".
-
-
-
+Then all of the inverter sensors should now be visible in "Utility" and "Temperature".
