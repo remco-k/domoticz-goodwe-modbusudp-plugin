@@ -6,7 +6,7 @@
 # Source:  https://github.com/remco-k/domoticz-goodwe-modbusudp-plugin
 # Author:  Remco Kuijer
 # License: Free. Use at your own risk.
-# Version: 0.0.1
+# Version: 0.0.2
 
 
 """
