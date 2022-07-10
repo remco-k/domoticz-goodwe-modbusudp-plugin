@@ -34,3 +34,7 @@ sudo pip3 install -r requirements.txt
 
 Then restart your Domoticz, and add the hardware via Setup->Hardware and select Type: "GoodWe ModbusUDP", enter a name and IP address and optionally select the inverter family for a faster connection time. Set the interval to your needs and then press the "Add" button.
 Then all of the inverter sensors should now be visible in "Utility" and "Temperature".
+
+## Inverters reported to work with this plugin
+* GW1000-XS Wifi
+* GW3600T-DS Wifi
