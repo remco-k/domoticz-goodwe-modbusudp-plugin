@@ -2,7 +2,7 @@
 
 A Domoticz plugin that connects to GoodWe inverters over LAN or WLAN via UDP that supports Modbus.
 
-The plugin uses a goodwe library from https://pypi.org/project/goodwe/ to communicate with the inverter.
+The plugin uses a goodwe library from https://pypi.org/project/goodwe/ (https://github.com/marcelblijleven/goodwe) to communicate with the inverter.
 
 ## Features
 * Auto detect singlephase or 3 phase model
