@@ -312,7 +312,8 @@ class BasePlugin:
 
                     # Find out if its a 3 phase or single phase model.
                     if self.inverter:
-                        if runtime_data["vgrid2"]==-0.1 and runtime_data["vgrid3"]==-0.1:
+                        
+                        if "vgrid2" not in runtime_data.keys() or "vgrid3" not in runtime_data.keys() or runtime_data["vgrid2"]==-0.1 or runtime_data["vgrid3"]==-0.1:
                             self.inverterIs3PhaseModel=False
                         else:
                             self.inverterIs3PhaseModel=True
