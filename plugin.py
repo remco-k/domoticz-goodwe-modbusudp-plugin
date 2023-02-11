@@ -395,20 +395,20 @@ class BasePlugin:
  
                     # Find out if its a 3 phase or single phase model.
                     if self.inverter:
-                        self.InverterIs3PhaseModel=False
+                        self.inverterIs3PhaseModel=False
                         # We have 2 ways of 3 phase determination: 
                         # 1: A fixed series list, named: THREEPHASE_SERIES 
                         # 2: Look into the modbus data for known 3 phase values and decide on that
                         # In the future we might add a 3rd way, by model name, if needed.
                         for iSerie in THREEPHASE_SERIES: # Iterate through our lookup table THREEPHASE_SERIES and see if the model name ends with our known 3 phase serie names
                             if self.inverter.model_name.endswith(f"-{iSerie}"):
-                                self.InverterIs3PhaseModel=True
+                                self.inverterIs3PhaseModel=True
                                 break
-                        if self.InverterIs3PhaseModel==False:
+                        if self.inverterIs3PhaseModel==False:
                             for unit in INVERTER_PARAMS:
                                 if unit[Column.FOR3PHASEMODEL]==True:
                                     if unit[Column.MODBUSNAME] in runtime_data.keys() and abs(runtime_data[unit[Column.MODBUSNAME]])>0.1:
-                                        self.InverterIs3PhaseModel=True
+                                        self.inverterIs3PhaseModel=True
                                         break
 
                         # Add devices if enabled and if needed.
