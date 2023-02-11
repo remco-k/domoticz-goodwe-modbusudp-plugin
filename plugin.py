@@ -227,7 +227,7 @@ class BasePlugin:
                     if "Mode5" in Parameters and Parameters["Mode5"] == "Extra":
                         for sensor in self.inverter.sensors():
                             if sensor.id_ in runtime_data:                        
-                                Domoticz.Log(f"{sensor.id_}: \t\t {sensor.name} = {runtime_data[sensor.id_]} {sensor.unit}")
+                                Domoticz.Log(f"Modbus sensor '{sensor.id_}': \t\t {sensor.name} = {runtime_data[sensor.id_]} {sensor.unit}")
 
                     
                     for unit in INVERTER_PARAMS: # Iterate through our lookup table INVERTER_PARAMS
@@ -236,7 +236,7 @@ class BasePlugin:
                                 if sensor.id_==unit[Column.MODBUSNAME]:                        
                                     # Now we read the value and debuglog it.
                                     value = runtime_data[unit[Column.MODBUSNAME]]
-                                    Domoticz.Debug(f"{sensor.id_} value {sensor.name} = {format(value)} {sensor.unit}.")
+                                    Domoticz.Debug(f"Processing '{sensor.id_}': Value {sensor.name} = {format(value)} {sensor.unit}.")
                                     
                                     if unit[Column.SWITCHTYPE]==DSwitchType.EnergyGenerated: # The value has been returned by the GoodWe library in kWh, but needs to be Wh for Domoticz
                                         value=value*1000.0
