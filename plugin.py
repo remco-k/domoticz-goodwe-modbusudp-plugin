@@ -57,7 +57,7 @@
                 <option label="240 seconds" value="240" />
             </options>
         </param>
-        <param field="Mode5" label="Log level" width="100px">
+        <param field="Mode5" label="Log filter" width="100px">
             <options>
                 <option label="Normal" value="Normal" default="true" />
                 <option label="Extra" value="Extra"/>
