@@ -113,6 +113,8 @@ class DSwitchType:
     General=0 
     EnergyGenerated=4
 
+THREEPHASE_SERIES = [ "ET","BT","DT" ] # All models in these series are 3-phase models, so we can skip our 3 phase model detection.
+
 INVERTER_PARAMS = [
 #   MODBUSNAME,     DISPLAY_NAME,         TYPE,           SUBTYPE,                      SWITCHTYPE,                  OPTIONS,              FORMAT,        PREPEND_IDNUM, RST0WAIT FOR3PHASEMODEL, IDNUM
     ["vpv1",        "PV1 Voltage",        DType.General,  DGeneralSubType.Voltage,      DSwitchType.General,         {},                   "{:.2f}",      None,           True,   False,           1 ], # PV1 Voltage = 127.1 V
@@ -307,15 +309,24 @@ class BasePlugin:
             else:
                 if runtime_data:
                     Domoticz.Log("Connection established with: {}:{}".format(Parameters["Address"], Parameters["Port"]))
-
+ 
                     # Find out if its a 3 phase or single phase model.
                     if self.inverter:
                         self.InverterIs3PhaseModel=False
-                        for unit in INVERTER_PARAMS:
-                            if unit[Column.FOR3PHASEMODEL]==True:
-                                if unit[Column.MODBUSNAME] in runtime_data.keys() and abs(runtime_data[unit[Column.MODBUSNAME]])>0.1:
-                                    self.InverterIs3PhaseModel=True
-                                    break
+                        # We have 2 ways of 3 phase determination: 
+                        # 1: A fixed series list, named: THREEPHASE_SERIES 
+                        # 2: Look into the modbus data for known 3 phase values and decide on that
+                        # In the future we might add a 3rd way, by model name, if needed.
+                        for iSerie in THREEPHASE_SERIES: # Iterate through our lookup table THREEPHASE_SERIES and see if the model name ends with our known 3 phase serie names
+                            if self.inverter.model_name.endswith(f"-{iSerie}"):
+                                self.InverterIs3PhaseModel=True
+                                break
+                        if self.InverterIs3PhaseModel==False:
+                            for unit in INVERTER_PARAMS:
+                                if unit[Column.FOR3PHASEMODEL]==True:
+                                    if unit[Column.MODBUSNAME] in runtime_data.keys() and abs(runtime_data[unit[Column.MODBUSNAME]])>0.1:
+                                        self.InverterIs3PhaseModel=True
+                                        break
 
                         # Add devices if enabled and if needed.
                         if self.add_devices:
