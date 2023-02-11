@@ -310,11 +310,12 @@ class BasePlugin:
 
                     # Find out if its a 3 phase or single phase model.
                     if self.inverter:
-                        
-                        if "vgrid2" not in runtime_data.keys() or "vgrid3" not in runtime_data.keys() or runtime_data["vgrid2"]==-0.1 or runtime_data["vgrid3"]==-0.1:
-                            self.inverterIs3PhaseModel=False
-                        else:
-                            self.inverterIs3PhaseModel=True
+                        self.InverterIs3PhaseModel=False
+                        for unit in INVERTER_PARAMS:
+                            if unit[Column.FOR3PHASEMODEL]==True:
+                                if unit[Column.MODBUSNAME] in runtime_data.keys() and abs(runtime_data[unit[Column.MODBUSNAME]])>0.1:
+                                    self.InverterIs3PhaseModel=True
+                                    break
 
                         # Add devices if enabled and if needed.
                         if self.add_devices:
