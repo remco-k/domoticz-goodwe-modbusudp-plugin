@@ -8,7 +8,7 @@
 # License: Free. Use at your own risk.
 
 """
-<plugin key="GoodWe_ModbusUDP" name="GoodWe ModbusUDP" author="Remco Kuijer" version="0.0.4" wikilink="https://github.com/remco-k/domoticz-goodwe-modbusudp-plugin/blob/master/README.md" externallink="https://github.com/remco-k/domoticz-goodwe-modbusudp-plugin">
+<plugin key="GoodWe_ModbusUDP" name="GoodWe ModbusUDP" author="Remco Kuijer" version="0.0.5" wikilink="https://github.com/remco-k/domoticz-goodwe-modbusudp-plugin/blob/master/README.md" externallink="https://github.com/remco-k/domoticz-goodwe-modbusudp-plugin">
    <description>
         <h2>GoodWe Modbus UDP plugin</h2><br/>
         <h3>Features</h3>
