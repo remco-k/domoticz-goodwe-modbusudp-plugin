@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+    #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 # GoodWe ModbusUDP fixed at portnumber 8899
@@ -254,6 +254,8 @@ class BasePlugin:
         # (GoodWe inverters are known to have a unstable Wifi plug)
         self.lastconnectfailuretime=None
         self.retrydelay=30000 # 30 seconds.
+        self.connectionFailureCountOnHeartbeat=0
+        self.connectionFailureMaxCountOnHeartbeat=5
 
     def onStart(self):
         self.add_devices = bool(Parameters["Mode1"])
@@ -300,9 +302,17 @@ class BasePlugin:
             runtime_data = None
             try:
                 runtime_data = asyncio.run( self.inverter.read_runtime_data() )
-            except ConnectionException as e:
+                self.connectionFailureCountOnHeartbeat=0
+            except (ConnectionException, goodwe.exceptions.RequestFailedException) as e:
                 runtime_data = None
-                Domoticz.Log("Connection faillure")
+                self.connectionFailureCountOnHeartbeat=self.connectionFailureCountOnHeartbeat+1
+                Domoticz.Log(f"Connection failure #{self.connectionFailureCountOnHeartbeat}/{self.connectionFailureMaxCountOnHeartbeat}")
+                if self.connectionFailureCountOnHeartbeat>=self.connectionFailureMaxCountOnHeartbeat:
+                    # We have 5 connection failure's in a row. Lets forget the inverter connection completely, this will
+                    # cause a reconnect in the next call to onHeartbeat and start its own retry mechanism if needed.
+                    Domoticz.Error(f"{self.connectionFailureCountOnHeartbeat} connection failures have occured. Disconnecting from inverter and try to reconnect in a moment.")
+                    self.connectionFailureCountOnHeartbeat=0
+                    self.inverter=None
             else:
                 # Yaay! We have a working connection with the GoodWe inverter and have read some data from it.    
                 if runtime_data:
