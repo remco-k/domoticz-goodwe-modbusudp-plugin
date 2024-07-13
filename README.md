@@ -58,5 +58,6 @@ Then all of the inverter sensors should now be visible in "Utility" and "Tempera
 ## Inverters reported to work with this plugin
 * GW1000-XS Wifi
 * GW3600T-DS Wifi
+* GW3000D-NS
 * GW3600D-NS
 * GW10K-ET
